@@ -1,1 +1,55 @@
-node_modules
+# Node.js
+node_modules/
+dist/
+.temp/
+.cache/
+
+# Vite
+.vite/
+vite.svg
+
+# Build outputs
+build/
+storybook-static/
+
+# Logs
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# macOS
+.DS_Store
+
+# System
+Thumbs.db
+
+# TypeScript
+*.tsbuildinfo
+
+# IDEs
+.vscode/
+.idea/
+
+# Local env files
+.env
+.env.*.local
+
+# GitHub Pages build branch (if tracked locally)
+gh-pages/
+
+# Optional: test output
+coverage/
+
+# Optional: Playwright / Vitest stuff
+test-results/
+.vitest/
+
+# Optional: lint cache
+.eslintcache
+
+# Optional: Storybook cache
+node_modules/.cache/storybook
+
+# Optional: log from local preview
+*.log
