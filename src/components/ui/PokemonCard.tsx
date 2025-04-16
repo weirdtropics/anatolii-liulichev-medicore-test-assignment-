@@ -1,38 +1,28 @@
-import {
-  Card,
-  CardContent,
-  Typography,
-  CardMedia,
-  IconButton,
-  Box,
-  Divider,
-} from '@mui/material';
+import { Card, CardContent, Typography, CardMedia, IconButton, Box, Divider } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import { PokemonCardProps } from '@/types/props';
-import { Snackbar } from '@mui/material';
-import { useState } from 'react';
+import { PokemonCardData } from '@/schema/pokemon';
+
+interface PokemonCardProps {
+  pokemon: PokemonCardData;
+  onClick?: () => void;
+  isFavorite: boolean;
+  onToggleFavorite: (pokemon: PokemonCardData) => void;
+}
 
 export const PokemonCard = ({
   pokemon,
   onClick,
   isFavorite,
-  toggleFavorite,
+  onToggleFavorite,
 }: PokemonCardProps) => {
   const { id, name, image } = pokemon;
-  const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const [snackbarMessage, setSnackbarMessage] = useState('');
-
 
   const handleToggleFavorite = (e: React.MouseEvent) => {
     e.stopPropagation();
-    toggleFavorite(id);
-  
-    const message = `${name} has been ${isFavorite ? 'removed from' : 'added to'} your favourite list`;
-    setSnackbarMessage(message);
-    setSnackbarOpen(true);
+    onToggleFavorite(pokemon);
   };
-  
+
   return (
     <Card
       onClick={onClick}
@@ -54,8 +44,7 @@ export const PokemonCard = ({
       elevation={0}
     >
       <IconButton
-      onClick={handleToggleFavorite}
- 
+        onClick={handleToggleFavorite}
         sx={{
           position: 'absolute',
           top: 8,
@@ -103,14 +92,6 @@ export const PokemonCard = ({
           #{id}
         </Typography>
       </CardContent>
-      <Snackbar
-  open={snackbarOpen}
-  autoHideDuration={3000}
-  onClose={() => setSnackbarOpen(false)}
-  message={snackbarMessage}
-  anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-/>
     </Card>
-    
   );
 };

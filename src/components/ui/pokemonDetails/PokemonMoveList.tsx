@@ -5,13 +5,13 @@ interface PokemonMoveListProps {
 }
 
 export const PokemonMoveList = ({ moves }: PokemonMoveListProps) => {
-  const moveNames = moves.slice(0, 12).map((m) => m.move.name);
+  const moveNames = moves.slice(0, 12).map(m => m.move.name);
 
   return (
     <Box>
-   <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-  Moves
-</Typography>
+      <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
+        Moves
+      </Typography>
 
       <Box
         sx={{

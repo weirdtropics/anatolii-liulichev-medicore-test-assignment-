@@ -10,11 +10,11 @@ interface PokemonStatsChartProps {
 export const PokemonStatsChart = ({ stats, experience }: PokemonStatsChartProps) => {
   return (
     <Box>
-<Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-  Base stats
-</Typography>
+      <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
+        Base stats
+      </Typography>
 
-      {stats.map((stat) => {
+      {stats.map(stat => {
         const value = stat.base_stat;
         const name = stat.stat.name.toUpperCase();
         const percentage = Math.min((value / MAX_STAT) * 100, 100);

@@ -9,7 +9,7 @@ export const usePokemonListInfinite = () => {
     PokemonCardData[],
     Error,
     InfiniteData<PokemonCardData[]>,
-    string[],                            
+    string[],
     number
   >({
     queryKey: ['pokemonList'],

@@ -1,8 +1,5 @@
 import { useState, useMemo } from 'react';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import TextField from '@mui/material/TextField';
-import { CircularProgress } from '@mui/material';
+import { Box, Typography, TextField, CircularProgress, Snackbar } from '@mui/material';
 import { useInView } from 'react-intersection-observer';
 import { InfiniteData, UseInfiniteQueryResult } from '@tanstack/react-query';
 
@@ -17,6 +14,8 @@ import { toPokemonCardData } from '@/utils/pokemonUtils';
 export const PokedexPage = () => {
   const [selectedPokemon, setSelectedPokemon] = useState<PokemonCardData | undefined>();
   const [searchTerm, setSearchTerm] = useState('');
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
 
   const { isFavorite, toggleFavorite } = useFavorites();
 
@@ -34,14 +33,24 @@ export const PokedexPage = () => {
     if (searchTerm) {
       return searchResult ? [toPokemonCardData(searchResult)] : [];
     }
-    return data?.pages.flatMap((page) => page) ?? [];
+    return data?.pages.flatMap(page => page) ?? [];
   }, [searchTerm, searchResult, data]);
+
+  const handleToggleFavorite = (pokemon: PokemonCardData) => {
+    toggleFavorite(pokemon.id);
+    const message = `${pokemon.name} has been ${
+      isFavorite(pokemon.id) ? 'added to' : 'removed from'
+    } your favourite list`;
+    setSnackbarMessage(message);
+    setSnackbarOpen(true);
+  };
 
   const handleCloseModal = () => setSelectedPokemon(undefined);
 
   if (inView && hasNextPage && !searchTerm) {
     fetchNextPage();
   }
+
   return (
     <>
       <Box mb={3} display="flex" justifyContent="center">
@@ -50,7 +59,7 @@ export const PokedexPage = () => {
           variant="outlined"
           size="small"
           value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          onChange={e => setSearchTerm(e.target.value)}
           sx={{ width: 500 }}
         />
       </Box>
@@ -74,15 +83,13 @@ export const PokedexPage = () => {
           },
         }}
       >
-        {showList.map((pokemon) => (
+        {showList.map(pokemon => (
           <PokemonCard
             key={pokemon.id}
             pokemon={pokemon}
-            onClick={() => {
-              setSelectedPokemon(pokemon);
-            }}
+            onClick={() => setSelectedPokemon(pokemon)}
             isFavorite={isFavorite(pokemon.id)}
-            toggleFavorite={toggleFavorite}
+            onToggleFavorite={handleToggleFavorite}
           />
         ))}
       </Box>
@@ -93,15 +100,23 @@ export const PokedexPage = () => {
         </Box>
       )}
 
-{selectedPokemon && (
-  <PokemonDetailsModal
-    open={true}
-    onClose={handleCloseModal}
-    pokemon={selectedPokemon}
-    isFavorite={isFavorite(selectedPokemon.id)}
-    toggleFavorite={toggleFavorite}
-  />
-)}
+      {selectedPokemon && (
+        <PokemonDetailsModal
+          open
+          onClose={handleCloseModal}
+          pokemon={selectedPokemon}
+          isFavorite={isFavorite(selectedPokemon.id)}
+          toggleFavorite={toggleFavorite}
+        />
+      )}
+
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={3000}
+        onClose={() => setSnackbarOpen(false)}
+        message={snackbarMessage}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      />
     </>
   );
 };

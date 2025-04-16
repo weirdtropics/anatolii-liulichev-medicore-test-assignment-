@@ -8,7 +8,7 @@ export const FavoritesPage = () => {
   const { data } = usePokemonListInfinite();
 
   const pokemonList = data?.pages.flat() ?? [];
-  const favoritePokemon = pokemonList.filter((pokemon) => favorites.includes(pokemon.id));
+  const favoritePokemon = pokemonList.filter(pokemon => favorites.includes(pokemon.id));
 
   return (
     <Box>
@@ -26,7 +26,7 @@ export const FavoritesPage = () => {
             },
           }}
         >
-          {favoritePokemon.map((p) => (
+          {favoritePokemon.map(p => (
             <PokemonCard
               key={p.id}
               pokemon={p}

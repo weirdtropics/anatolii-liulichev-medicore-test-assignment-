@@ -1,21 +1,15 @@
 import axios from 'axios';
-import {
-  PokemonResponseSchema,
-  PokemonListResponseSchema,
-  SpeciesSchema,
-} from '@/schema/pokemon';
+import { PokemonResponseSchema, PokemonListResponseSchema, SpeciesSchema } from '@/schema/pokemon';
 import { PokemonZod, PokemonSpeciesZod, FullPokemon, PokemonCardData } from '@/schema/pokemon';
 
 import { BASE_API_URL } from '@/constants';
 
 export const fetchPokemonById = async (id: number): Promise<PokemonZod> => {
-  const response = await axios.get(`${BASE_API_URL}/pokemon/${id}`)
+  const response = await axios.get(`${BASE_API_URL}/pokemon/${id}`);
   return PokemonResponseSchema.parse(response.data);
 };
 
-export const fetchPokemonSpeciesById = async (
-  id: number
-): Promise<PokemonSpeciesZod> => {
+export const fetchPokemonSpeciesById = async (id: number): Promise<PokemonSpeciesZod> => {
   const response = await axios.get(`${BASE_API_URL}/pokemon-species/${id}`);
   return SpeciesSchema.parse(response.data);
 };
@@ -34,7 +28,8 @@ export const fetchPokemonByName = async (name: string): Promise<PokemonZod> => {
 
 export const getPokemonDescription = (species: PokemonSpeciesZod): string => {
   return (
-    species.flavor_text_entries.find((entry) => entry.language.name === 'en')
+    species.flavor_text_entries
+      .find(entry => entry.language.name === 'en')
       ?.flavor_text.replace(/\f/g, ' ') ?? 'No description available.'
   );
 };
@@ -49,11 +44,9 @@ const getImageUrl = (id: number): string =>
 
 export const fetchPokemonPage = async (
   offset: number,
-  limit: number
+  limit: number,
 ): Promise<PokemonCardData[]> => {
-  const response = await axios.get(
-    `${BASE_API_URL}/pokemon?limit=${limit}&offset=${offset}`
-  );
+  const response = await axios.get(`${BASE_API_URL}/pokemon?limit=${limit}&offset=${offset}`);
   const parsed = PokemonListResponseSchema.parse(response.data);
 
   return parsed.results.map(({ name, url }) => {
@@ -78,9 +71,8 @@ export const fetchFullPokemonDetails = async (id: number): Promise<FullPokemon> 
   return {
     id: pokemon.id,
     name: pokemon.name,
-    image:
-      pokemon.sprites.other?.['official-artwork']?.front_default ?? '/placeholder.png',
-    types: pokemon.types.map((t) => t.type.name),
+    image: pokemon.sprites.other?.['official-artwork']?.front_default ?? '/placeholder.png',
+    types: pokemon.types.map(t => t.type.name),
     stats: pokemon.stats,
     moves: pokemon.moves,
     base_experience: pokemon.base_experience,

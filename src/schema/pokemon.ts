@@ -1,11 +1,9 @@
 import { z } from 'zod';
 
-
 const NamedAPIResource = z.object({
   name: z.string(),
   url: z.string().url(),
 });
-
 
 export const StatSchema = z.object({
   base_stat: z.number(),
@@ -25,7 +23,6 @@ export const TypeSchema = z.object({
 });
 export type TypeZod = z.infer<typeof TypeSchema>;
 
-
 const OfficialArtworkSchema = z.object({
   front_default: z.string().nullable(),
   front_shiny: z.string().nullable().optional(),
@@ -38,7 +35,6 @@ export const SpritesSchema = z.object({
     })
     .optional(),
 });
-
 
 export const PokemonResponseSchema = z.object({
   id: z.number(),
@@ -60,18 +56,16 @@ export const SpeciesSchema = z.object({
       language: z.object({
         name: z.string(),
       }),
-    })
+    }),
   ),
 });
 export type PokemonSpeciesZod = z.infer<typeof SpeciesSchema>;
-
 
 export const PokemonListItemSchema = NamedAPIResource;
 
 export const PokemonListResponseSchema = z.object({
   results: z.array(PokemonListItemSchema),
 });
-
 
 export type ApiType = TypeZod;
 
@@ -92,4 +86,3 @@ export type FullPokemon = {
   base_experience: number;
   description: string;
 };
-

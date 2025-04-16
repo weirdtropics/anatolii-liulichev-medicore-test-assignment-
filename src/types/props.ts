@@ -8,11 +8,11 @@ export interface PokemonDetailsModalProps extends WithPokemon, WithFavorite {
   open: boolean;
   onClose: () => void;
 }
-  export interface WithFavorite {
-    isFavorite: boolean;
-    toggleFavorite: (id: number) => void;
-  }
-  
-  export interface WithPokemon {
-    pokemon: PokemonCardData;
-  }
+export interface WithFavorite {
+  isFavorite: boolean;
+  toggleFavorite: (id: number) => void;
+}
+
+export interface WithPokemon {
+  pokemon: PokemonCardData;
+}

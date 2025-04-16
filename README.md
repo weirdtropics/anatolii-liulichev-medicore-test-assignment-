@@ -53,7 +53,6 @@ The app will be running at `http://localhost:5173` (default Vite port).
 
 Coming soon: unit tests for key components and hooks.
 
-
 ## 🌍 API
 
 This app uses the public [PokéAPI](https://pokeapi.co/). No authentication or backend is required.

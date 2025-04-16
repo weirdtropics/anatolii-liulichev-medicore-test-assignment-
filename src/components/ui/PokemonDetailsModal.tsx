@@ -43,8 +43,12 @@ export const PokemonDetailsModal = ({
         }}
       >
         <Box>
-          <Typography variant="h6" fontWeight={600}>{data.name}</Typography>
-          <Typography variant="body2" color="text.secondary">#{data.id}</Typography>
+          <Typography variant="h6" fontWeight={600}>
+            {data.name}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            #{data.id}
+          </Typography>
         </Box>
         <Box>
           <IconButton onClick={onClose}>
@@ -87,10 +91,12 @@ export const PokemonDetailsModal = ({
             <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
               Description
             </Typography>
-            <Typography variant="body2" paragraph>{data.description}</Typography>
+            <Typography variant="body2" paragraph>
+              {data.description}
+            </Typography>
 
             <Box mt={2}>
-            <PokemonTypeChips types={data.types.map(type => ({ type: { name: type } }))} />
+              <PokemonTypeChips types={data.types.map(type => ({ type: { name: type } }))} />
             </Box>
           </Box>
 
@@ -102,10 +108,7 @@ export const PokemonDetailsModal = ({
               },
             }}
           >
-            <PokemonStatsChart
-              stats={data.stats}
-              experience={data.base_experience}
-            />
+            <PokemonStatsChart stats={data.stats} experience={data.base_experience} />
           </Box>
 
           <Box
